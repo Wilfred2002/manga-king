@@ -3,12 +3,19 @@
 body {
     background-color: black;
     color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
+
 .center {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 10vh; /* Full viewport height */
     text-align: center;
-  }
-  
+}
+
+.separator {
+    border-top: 3px solid #bbb;
+    width: 100%;
+}
