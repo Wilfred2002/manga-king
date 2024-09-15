@@ -16,11 +16,6 @@ export default function Nav() {
             </Link>
           </li>
           <li>
-            <Link href="/top10">
-              <Button variant="ghost">Top 10 Weekly</Button>
-            </Link>
-          </li>
-          <li>
             <Link href="/about">
               <Button variant="ghost">About</Button>
             </Link>
