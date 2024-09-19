@@ -5,9 +5,10 @@ import { ModeToggle } from "./ui/ModeToggle";
 export default function Nav() {
   return (
     <nav>
-      <header className="flex justify-between items-center p-14">
+      <header className="flex justify-between items-center px-10 py-6">
+      <img src="/pngs/pngegg.png" alt="Logo" className="h-12 w-auto" /> {/* Adjusted image path */}
         <Link href="/">
-          <h1 className="text-3xl">Manga King</h1>
+          <h1 className="text-2xl">Manga King</h1>
         </Link>
         <ul className="flex space-x-4 ml-auto">
           <li>
@@ -23,6 +24,9 @@ export default function Nav() {
           <ModeToggle />
         </ul>
       </header>
+      <div>
+          <hr className = "border-t border-gray-500"></hr>
+        </div>
     </nav>
   );
 }
