@@ -10,9 +10,7 @@ export default function About() {
         </h1>
         <p className="text-lg max-w-2xl text-center">
           This website was developed by Wilfred Naraga as an educational project.
-          Built on Typescript using NextJS and Tailwind CSS, 
-          it also uses the MangaDex API to provide the content..
-          The goal is to create a smooth experience for manga readers.
+          Built on Typescript using NextJS and Tailwind CSS. Credit goes to MangaDex!
         </p>
       </div>
     </div>
