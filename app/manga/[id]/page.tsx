@@ -31,6 +31,8 @@ function MangaDetails() {
   const[mangaArtists, setmangaArtist] = useState(null);
   const[mangaRating, setmangaRating] = useState(null);
   const[mangaPublished, setmangaPublished] = useState(null);
+  const[mangaChapters, setmangaChapters] = useState([]);
+  const[displayLimit, setDisplayLimit] = useState(15);
 
   //Setting useState 
 
@@ -89,6 +91,10 @@ function MangaDetails() {
 
       const year = response.data.data.attributes.year;
       setmangaPublished(year);
+
+      const chaptersResponse = await axios.get(`https://api.mangadex.org/chapter?manga=${id}`);
+      console.log(chaptersResponse.data);
+      setmangaChapters(chaptersResponse.data);
 
       //const response3 = await axios.get(`https://api.mangadex.org/rating?manga=`, {
       //  params: { manga: [id] } // Passing the ID as an array
@@ -166,20 +172,36 @@ function MangaDetails() {
         </div>
       </div>
 
-      <div className = "flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto">
-        <h1 className = "text-3xl font-bold">Chapters</h1>
+      <div className = "flex flex-col py-16 max-w-screen-xl mx-auto">
+        <h1 className = "text-3xl font-bold px-6">Chapters List</h1>
 
         <div>
-          <Table>
-            <TableHeader>
+        <Table>
+          <TableHeader>
             <TableRow>
-                <TableHead className="w-[100px]">Chapter</TableHead>
-                <TableHead>Uploaded</TableHead>
-                <TableHead>Group</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="w-[100px]">Chapter</TableHead>
+              <TableHead className="w-[150px]">Uploaded</TableHead>
+              <TableHead className="w-[200px]">Group</TableHead>
+              <TableHead className="text-right w-[120px]">Read</TableHead>  {/* Updated header */}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {mangaChapters && mangaChapters.data && mangaChapters.data.map((chapter) => (
+              <TableRow key={chapter.id}>
+                <TableCell className="text-center">{chapter.attributes.chapter || "N/A"}</TableCell>
+                <TableCell>{chapter.attributes.createdAt ? new Date(chapter.attributes.createdAt).toLocaleDateString() : "N/A"}</TableCell>
+                <TableCell>
+                  {chapter.relationships.find(rel => rel.type === 'scanlation_group' && rel.attributes) ?
+                    chapter.relationships.find(rel => rel.type === 'scanlation_group').attributes.name : "Unknown"}
+                </TableCell>
+                <TableCell className="text-right">
+                  <a href={`/read/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>  {/* Placeholder for the link */}
+                </TableCell>
               </TableRow>
-            </TableHeader>
-          </Table>
+            ))}
+          </TableBody>
+        </Table>
+
         </div>
 
 
