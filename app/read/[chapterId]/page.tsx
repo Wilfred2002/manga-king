@@ -15,7 +15,10 @@ function readChapter() {
         try{
 
             const response = await axios.get(`https://api.mangadex.org/manga/${chapterId}`);
-            cont title = 
+            console.log(response.data);
+
+            const title = response.data.attributes.title.en;
+            setmangaTitle(title);
         }
         catch(error){
             console.log("Error:", error);
