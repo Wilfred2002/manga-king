@@ -91,14 +91,20 @@ function MangaDetails() {
 
       const year = response.data.data.attributes.year;
       setmangaPublished(year);
-
+      
+      function delay(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
 
       let allChapters:any = [];
 
       const fetchAllChapters = async (id) => {
-  
+        
+
         let offset = 0;
+
         const limit = 100; // Set a reasonable limit for each request
+      
         let hasMore = true;
       
         while (hasMore) {
@@ -111,6 +117,7 @@ function MangaDetails() {
       
           // Check if there are more chapters to fetch
           if (chaptersData.total > allChapters.length) {
+            await delay(1000);
             offset += limit; // Move to the next page
           } else {
             hasMore = false; // Stop if all chapters are fetched
@@ -208,33 +215,29 @@ function MangaDetails() {
 
         <div>
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Chapter</TableHead>
-              <TableHead className="w-[150px]">Uploaded</TableHead>
-              <TableHead className="w-[200px]">Group</TableHead>
-              <TableHead className="text-right w-[120px]">Read</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {mangaChapters && mangaChapters.map((chapter) => {
-              // Find the scanlation group relationship if available
-              const scanlationGroup = chapter.relationships.find(rel => rel.type === 'scanlation_group');
-              const groupName = scanlationGroup.attributes.name ? scanlationGroup.attributes.name : "Unknown";
-
-              return (
-                <TableRow key={chapter.id}>
-                  <TableCell className="text-center">{chapter.attributes.chapter || "N/A"}</TableCell>
-                  <TableCell>{chapter.attributes.createdAt ? new Date(chapter.attributes.createdAt).toLocaleDateString() : "N/A"}</TableCell>
-                  <TableCell>{groupName}</TableCell>
-                  <TableCell className="text-right">
-                    <a href={`/read/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Chapter</TableHead>
+            <TableHead className="w-[150px]">Uploaded</TableHead>
+            <TableHead className="w-[200px]">Group</TableHead>
+            <TableHead className="text-right w-[120px]">Read</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {mangaChapters && mangaChapters.map((chapter) => {
+            return (
+              <TableRow key={chapter.id}>
+                <TableCell className="text-center">{chapter.attributes.chapter || "N/A"}</TableCell>
+                <TableCell>{chapter.attributes.createdAt ? new Date(chapter.attributes.createdAt).toLocaleDateString() : "N/A"}</TableCell>
+                <TableCell>unknown</TableCell>
+                <TableCell className="text-right">
+                  <a href={`/read/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
 
 
 
