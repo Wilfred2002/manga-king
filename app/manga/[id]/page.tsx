@@ -44,6 +44,10 @@ function MangaDetails() {
     }
     return null;
   };
+  
+  function delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   async function fetchData(){
     try{
@@ -92,45 +96,42 @@ function MangaDetails() {
       const year = response.data.data.attributes.year;
       setmangaPublished(year);
       
-      function delay(ms: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
 
-      let allChapters:any = [];
 
+      let allChapters:any = []; // Initialize with correct type
       const fetchAllChapters = async (id) => {
-        
-
         let offset = 0;
-
         const limit = 100; // Set a reasonable limit for each request
-      
         let hasMore = true;
+
       
+
         while (hasMore) {
-          // Fetch chapters with pagination using offset and limit
           const response = await axios.get(`https://api.mangadex.org/chapter?manga=${id}&limit=${limit}&offset=${offset}`);
           const chaptersData = response.data;
-      
-          // Add the fetched chapters to the allChapters array
-          allChapters = [...allChapters, ...chaptersData.data];
-      
-          // Check if there are more chapters to fetch
-          if (chaptersData.total > allChapters.length) {
-            await delay(1000);
-            offset += limit; // Move to the next page
+          console.log(chaptersData.data);
+
+          // Loop through all chapters and manually add only English ones
+          for (let chapter of chaptersData.data) {
+            if (chapter.attributes.translatedLanguage === 'en') {
+              allChapters.push(chapter); // Only add if it's in English
+            }
+          }
+          console.log(allChapters);
+
+          if (chaptersData.data.length < limit) {
+              hasMore = false;
           } else {
-            hasMore = false; // Stop if all chapters are fetched
+            await delay(1000);
+            offset += limit; 
           }
         }
         return allChapters;
       };
       
-      // Usage
       const chaptersResponse = await fetchAllChapters(id);
       console.log(chaptersResponse);
       setmangaChapters(allChapters);
-
 
       //const response3 = await axios.get(`https://api.mangadex.org/rating?manga=`, {
       //  params: { manga: [id] } // Passing the ID as an array
@@ -139,9 +140,6 @@ function MangaDetails() {
       //console.log(response3.data);
       //const rating = response3.data.ratings.rating;
       //setmangaRating(rating);
-
-
-
     } catch(error){
       console.error("error:", error);
     }
@@ -219,7 +217,7 @@ function MangaDetails() {
           <TableRow>
             <TableHead className="w-[100px]">Chapter</TableHead>
             <TableHead className="w-[150px]">Uploaded</TableHead>
-            <TableHead className="w-[200px]">Group</TableHead>
+            <TableHead className="w-[300px]">Title</TableHead>
             <TableHead className="text-right w-[120px]">Read</TableHead>
           </TableRow>
         </TableHeader>
@@ -229,7 +227,7 @@ function MangaDetails() {
               <TableRow key={chapter.id}>
                 <TableCell className="text-center">{chapter.attributes.chapter || "N/A"}</TableCell>
                 <TableCell>{chapter.attributes.createdAt ? new Date(chapter.attributes.createdAt).toLocaleDateString() : "N/A"}</TableCell>
-                <TableCell>unknown</TableCell>
+                <TableCell>{chapter.attributes.title ? chapter.attributes.title : ""}</TableCell>
                 <TableCell className="text-right">
                   <a href={`/read/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>
                 </TableCell>
