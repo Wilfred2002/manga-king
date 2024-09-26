@@ -2,14 +2,41 @@
 
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
-import Link from "next/link"; 
-import Image from 'next/image';
-
+import Link from "next/link";
 
 const API_BASE_URL = "https://api.mangadex.org";
 
+// TypeScript interfaces for data structures
+interface MangaAttributes {
+  title: {
+    en?: string;
+    "ja-ro"?: string;
+  };
+  description?: {
+    en?: string;
+  };
+}
+
+interface MangaRelationship {
+  id: string;
+  type: string;
+  attributes?: {
+    fileName?: string;
+  };
+}
+
+interface Manga {
+  id: string;
+  attributes: MangaAttributes;
+  relationships: MangaRelationship[];
+}
+
+interface MangaCover {
+  fileName: string;
+}
+
 export default function Home() {
-  const [mangaList, setMangaList] = useState([]);
+  const [mangaList, setMangaList] = useState<Manga[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +55,7 @@ export default function Home() {
     fetchManga();
   }, []);
 
-  const getCoverUrl = (manga) => {
+  const getCoverUrl = (manga: Manga): string | null => {
     const coverRelation = manga.relationships.find((rel) => rel.type === "cover_art");
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.256.jpg`;
@@ -40,7 +67,7 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300">
       <Nav />
 
-      <section className= "relative py-48 flex flex-col">
+      <section className="relative py-48 flex flex-col">
         <video
           className="absolute inset-0 w-full h-full object-cover"
           src="/videos/bgvidmk.mp4"
