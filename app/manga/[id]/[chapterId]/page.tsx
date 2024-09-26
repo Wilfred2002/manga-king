@@ -114,3 +114,5 @@ function ReadChapter() {
     );
 }
 
+export default ReadChapter;
+
