@@ -5,6 +5,11 @@ import { useParams } from 'next/navigation';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
+
+    export async function generateStaticParams() {
+    return null;
+  }
+  
   export default function ReadChapter() {
     const { id, chapterId } = useParams();
     const[mangaTitle, setmangaTitle] = useState(null);
