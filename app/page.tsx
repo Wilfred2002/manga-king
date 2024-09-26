@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import Link from "next/link"; 
+import Image from 'next/image';
+
 
 const API_BASE_URL = "https://api.mangadex.org";
 
