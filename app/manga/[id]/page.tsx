@@ -14,6 +14,7 @@ import {
 import { Button } from  '@/components/ui/button'
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
@@ -23,16 +24,14 @@ function MangaDetails() {
   const[mangaType, setMangaType] = useState(null);
   const[manga, setManga] = useState(null);
   const[author, setAuthor] = useState(null);
-  const[authorsID, setauthorsID] = useState(null);
   const[coverArt, setCoverArt] = useState(null);
   const[mangaStatus, setmangaStatus] = useState(null);
   const[mangaDemographic, setmangaDemographic] = useState(null);
   const[mangaDescription, setmangaDescription] = useState(null);
   const[mangaArtists, setmangaArtist] = useState(null);
-  const[mangaRating, setmangaRating] = useState(null);
+  const[mangaRating, setmangaRating] = useState<null | number>(null);
   const[mangaPublished, setmangaPublished] = useState(null);
   const[mangaChapters, setmangaChapters] = useState([]);
-  const[displayLimit, setDisplayLimit] = useState(15);
 
   //Setting useState 
 
@@ -68,7 +67,6 @@ function MangaDetails() {
       setMangaType(type); //setting type aka manga/manwha 
 
       const authorID = response.data.data.relationships[0].id;
-      setauthorsID(authorID); //grabbing author's ID from first api call
 
       if(authorID){
         const response2 = await axios.get(`https://api.mangadex.org/author/${authorID}`); //second API call for author's name
@@ -95,6 +93,8 @@ function MangaDetails() {
 
       const year = response.data.data.attributes.year;
       setmangaPublished(year);
+
+      setmangaRating(10);
       
 
 
@@ -112,7 +112,7 @@ function MangaDetails() {
           console.log(chaptersData.data);
 
           // Loop through all chapters and manually add only English ones
-          for (let chapter of chaptersData.data) {
+          for (const chapter of chaptersData.data) {
             if (chapter.attributes.translatedLanguage === 'en') {
               allChapters.push(chapter); // Only add if it's in English
             }
