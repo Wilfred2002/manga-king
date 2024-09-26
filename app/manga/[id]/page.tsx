@@ -3,7 +3,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,7 +13,6 @@ import {
 import { Button } from  '@/components/ui/button'
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
@@ -98,7 +96,7 @@ function MangaDetails() {
       
 
 
-      let allChapters:any = []; // Initialize with correct type
+      const allChapters = []; // Initialize with correct type
       const fetchAllChapters = async (id) => {
         let offset = 0;
         const limit = 100; // Set a reasonable limit for each request
