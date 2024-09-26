@@ -5,30 +5,6 @@ import { useParams } from 'next/navigation';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
-interface MangaAttributes {
-    title: {
-      en?: string;
-      "ja-ro"?: string;
-    };
-    description?: {
-      en?: string;
-    };
-  }
-  
-  interface MangaRelationship {
-    id: string;
-    type: string;
-    attributes?: {
-      fileName?: string;
-    };
-  }
-  
-  interface Manga {
-    id: string;
-    attributes: MangaAttributes;
-    relationships: MangaRelationship[];
-  }
-
   export default function ReadChapter() {
     const { id, chapterId } = useParams();
     const[mangaTitle, setmangaTitle] = useState(null);
