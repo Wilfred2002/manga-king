@@ -1,12 +1,11 @@
 "use client";
 
-import { Button } from  '@/components/ui/button'
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
-export default function readChapter() {
+export default function ReadChapter() {
     const { id, chapterId } = useParams();
     const[mangaTitle, setmangaTitle] = useState(null);
     const[realTitle, setrealTitle] = useState(null);
@@ -75,7 +74,7 @@ export default function readChapter() {
         if(chapterId){
             fetchChapters();
         }
-    }, [chapterId]);
+    }, [fetchChapters, chapterId]);
 
     return (
         <div className = "min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
