@@ -31,10 +31,6 @@ interface Manga {
   relationships: MangaRelationship[];
 }
 
-interface MangaCover {
-  fileName: string;
-}
-
 export default function Home() {
   const [mangaList, setMangaList] = useState<Manga[]>([]);
   const [loading, setLoading] = useState(true);
