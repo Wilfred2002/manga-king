@@ -92,8 +92,8 @@ export default function Home() {
                 <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer">
                   {getCoverUrl(manga) ? (
                     <img
-                      src={getCoverUrl(manga)}
-                      alt={`${manga.attributes.title.en || "Untitled"} Cover`}
+                    src={getCoverUrl(manga) || undefined}  // Fallback to undefined if null
+                    alt={`${manga.attributes.title.en || "Untitled"} Cover`}
                       width={256}
                       height={384}
                       className="w-full h-auto rounded"
