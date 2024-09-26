@@ -44,7 +44,7 @@ function MangaDetails() {
     }
     return null;
   };
-  
+
   function delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -229,7 +229,7 @@ function MangaDetails() {
                 <TableCell>{chapter.attributes.createdAt ? new Date(chapter.attributes.createdAt).toLocaleDateString() : "N/A"}</TableCell>
                 <TableCell>{chapter.attributes.title ? chapter.attributes.title : ""}</TableCell>
                 <TableCell className="text-right">
-                  <a href={`/read/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>
+                  <a href={`/manga/${id}/${chapter.id}`} className="text-blue-500 hover:text-blue-700">Read Chapter</a>
                 </TableCell>
               </TableRow>
             );
