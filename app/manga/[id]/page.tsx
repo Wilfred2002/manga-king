@@ -172,7 +172,7 @@ function MangaDetails() {
         return allChapters;
       };
 
-      const chaptersResponse = await fetchAllChapters(id);
+      const chaptersResponse = await fetchAllChapters(Array.isArray(id) ? id[0] : id);
       console.log(chaptersResponse);
       setMangaChapters(allChapters);
     } catch (error) {
