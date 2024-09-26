@@ -56,12 +56,6 @@ interface Chapter {
   attributes: ChapterAttributes;
 }
 
-interface Author {
-  id: string;
-  attributes: {
-    name: string;
-  };
-}
 
 function MangaDetails() {
   const { id } = useParams();
