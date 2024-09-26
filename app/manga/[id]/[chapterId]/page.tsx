@@ -28,18 +28,8 @@ interface MangaAttributes {
     attributes: MangaAttributes;
     relationships: MangaRelationship[];
   }
-export async function generateStaticParams() {
-    const mangaResponse = await axios.get('https://api.mangadex.org/manga?limit=10');
-    const mangas = mangaResponse.data.data;
-  
-    const params = mangas.map((manga: Manga) => {
-        return { id: manga.id, chapterId: '1' }; // Example with static chapterId
-    });
-  
-    return params;
-  }
 
-export default function ReadChapter() {
+  export default function ReadChapter() {
     const { id, chapterId } = useParams();
     const[mangaTitle, setmangaTitle] = useState(null);
     const[realTitle, setrealTitle] = useState(null);

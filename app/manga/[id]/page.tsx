@@ -56,8 +56,7 @@ interface Chapter {
   attributes: ChapterAttributes;
 }
 
-
-function MangaDetails() {
+ export default function MangaDetails() {
   const { id } = useParams();
   const [mangaType, setMangaType] = useState<string | null>(null);
   const [manga, setManga] = useState<string | null>(null);
