@@ -287,5 +287,3 @@ function MangaDetails() {
     </div>
   );
 }
-
-export default MangaDetails;
