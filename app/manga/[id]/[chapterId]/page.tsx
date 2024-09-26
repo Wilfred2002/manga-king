@@ -18,6 +18,13 @@ export default function readChapter() {
     function delay(ms: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
+    
+      const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth', // Smooth scrolling
+        });
+    };
 
     async function fetchChapters(){
         try{
@@ -88,16 +95,25 @@ export default function readChapter() {
                             key={index}
                             src={url}
                             alt={`Page ${index + 1}`}
-                            className="w-full max-w-2xl mb-4" 
+                            className="w-full max-w-4xl mb-4"
+                            loading = "lazy" 
                         />
                     ))
                 )}
+
                 </div>
                 <h1 className = "font-bold text-3xl">Chapter : {chapterNumber ? chapterNumber : "Loading chapter:"}</h1>
                 <h1 className = "font-bold text-3xl">{mangaTitle ? mangaTitle : ""}</h1>
                 <h1 className = "font-bold text-2xl">{realTitle ? realTitle : "Loading title"}</h1>
                 <h1 className = "font-light">{scanlationGroup ? scanlationGroup : "loading group"}</h1>
             </div>
+            <button
+                onClick={scrollToTop}
+                className="fixed right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-lg"
+                style={{ zIndex: 1000 }}
+            >
+                ↑ Top
+            </button>
         </div>
     );
 }
