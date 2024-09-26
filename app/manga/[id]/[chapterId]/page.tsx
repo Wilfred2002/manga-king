@@ -14,9 +14,6 @@ export default function ReadChapter() {
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    function delay(ms: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
     
       const scrollToTop = () => {
         window.scrollTo({
