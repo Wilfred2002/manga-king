@@ -5,7 +5,41 @@ import { useParams } from 'next/navigation';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
-function ReadChapter() {
+interface MangaAttributes {
+    title: {
+      en?: string;
+      "ja-ro"?: string;
+    };
+    description?: {
+      en?: string;
+    };
+  }
+  
+  interface MangaRelationship {
+    id: string;
+    type: string;
+    attributes?: {
+      fileName?: string;
+    };
+  }
+  
+  interface Manga {
+    id: string;
+    attributes: MangaAttributes;
+    relationships: MangaRelationship[];
+  }
+export async function generateStaticParams() {
+    const mangaResponse = await axios.get('https://api.mangadex.org/manga?limit=10');
+    const mangas = mangaResponse.data.data;
+  
+    const params = mangas.map((manga: Manga) => {
+        return { id: manga.id, chapterId: '1' }; // Example with static chapterId
+    });
+  
+    return params;
+  }
+
+export default function ReadChapter() {
     const { id, chapterId } = useParams();
     const[mangaTitle, setmangaTitle] = useState(null);
     const[realTitle, setrealTitle] = useState(null);
@@ -113,6 +147,3 @@ function ReadChapter() {
         </div>
     );
 }
-
-export default ReadChapter;
-
