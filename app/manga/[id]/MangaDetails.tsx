@@ -191,7 +191,7 @@ import {
       if (params?.id) {
         fetchData(); // Safely fetch data only if id exists
       }
-    }, [params.id]);
+    }, [fetchData, params.id]);
   
     return (
       <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
@@ -239,7 +239,7 @@ import {
             </div>
             <div className="border-t border-gray-600 my-4"></div>
   
-            <h1 className="text-2xl py-3           font-bold">More Info</h1>
+            <h1 className="text-2xl py-3 font-bold">More Info</h1>
 
             <div>
               <span className="text-gray-400">Artist: </span>

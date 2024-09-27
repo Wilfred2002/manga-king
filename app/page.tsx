@@ -2,6 +2,35 @@ import Nav from "../components/Nav";
 import Link from "next/link"; 
 import Image from "next/image";
 
+interface MangaAttributes {
+  title: {
+    en?: string;
+    "ja-ro"?: string;
+  };
+  description?: {
+    en?: string;
+  };
+}
+
+interface MangaRelationship {
+  id: string;
+  type: string;
+  attributes?: {
+    fileName?: string;
+  };
+}
+
+interface Manga {
+  id: string;
+  attributes: MangaAttributes;
+  relationships: MangaRelationship[];
+}
+
+interface MangaListResponse {
+  data: Manga[];
+}
+
+
 export default async function Home() {
   // Fetch manga list from the API
   const res = await fetch('https://api.mangadex.org/manga?limit=10&order[followedCount]=desc&includes[]=cover_art');
