@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 import Nav from '@/components/Nav'; 
 import axios from 'axios';
 
-export default function ReadChapter() {
-    const { id, chapterId } = useParams();
+interface ReadChapterProps {
+    id: string;
+    chapterId: string;
+  }
+
+export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
     const[mangaTitle, setmangaTitle] = useState(null);
     const[realTitle, setrealTitle] = useState(null);
     const[scanlationGroup, setscanlationGroup] = useState(null);
@@ -71,7 +74,7 @@ export default function ReadChapter() {
         if(chapterId){
             fetchChapters();
         }
-    }, [chapterId]);
+    }, [fetchChapters, chapterId]);
 
     return (
         <div className = "min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">

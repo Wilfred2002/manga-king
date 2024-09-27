@@ -138,7 +138,7 @@ import {
         const trimmedDescription = descript.split("---")[0].trim();
         setMangaDescription(trimmedDescription); // Set description
   
-        const artistRelation = relationships.find((rel) => rel.type === "artist");
+        const artistRelation = relationships.find((rel: MangaRelationship) => rel.type === "artist");
         if (artistRelation && artistRelation.attributes) {
           setMangaArtist(artistRelation.attributes.name); // Set artist
         }
