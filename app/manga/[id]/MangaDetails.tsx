@@ -114,7 +114,7 @@ import {
         setMangaType(type); // Set manga type (manga/manhwa)
   
         const relationships = response.data.data.relationships;
-        const authorRelation = relationships.find((rel) => rel.type === "author");
+        const authorRelation = relationships.find((rel: MangaRelationship) => rel.type === "author");
   
         if (authorRelation) {
           const response2 = await axios.get(
