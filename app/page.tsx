@@ -26,11 +26,6 @@ interface Manga {
   relationships: MangaRelationship[];
 }
 
-interface MangaListResponse {
-  data: Manga[];
-}
-
-
 export default async function Home() {
   // Fetch manga list from the API
   const res = await fetch('https://api.mangadex.org/manga?limit=10&order[followedCount]=desc&includes[]=cover_art');
@@ -40,7 +35,7 @@ export default async function Home() {
   const mangaList = data?.data || []; 
 
   // Helper function to get cover URL
-  const getCoverUrl = (manga: any) => {
+  const getCoverUrl = (manga: Manga) => {
     const coverRelation = manga.relationships.find((rel: any) => rel.type === "cover_art");
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.256.jpg`;
@@ -73,7 +68,7 @@ export default async function Home() {
       <section className="p-12">
         <h3 className="text-2xl text-center mb-8">Top 10 Manga</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {mangaList.map((manga: any) => (
+          {mangaList.map((manga: Manga) => (
             <Link href={`/manga/${manga.id}`} key={manga.id}>
               <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer">
                 {getCoverUrl(manga) ? (
