@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'; // This forces dynamic rendering
 import ReadChapter from "./ReadChapter";
 
 
