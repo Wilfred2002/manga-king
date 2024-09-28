@@ -5,8 +5,6 @@ const nextConfig = {
       domains: ['uploads.mangadex.org'], 
     },
   };
-
-  module.exports = nextConfig
   
   export default nextConfig;
   
