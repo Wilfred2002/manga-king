@@ -60,6 +60,8 @@ import {
   }: {
     params: { id: string };
   }) {
+
+    const proxyURL = "https://proxy-server-five-khaki.vercel.app/api";
     const [mangaType, setMangaType] = useState<string | null>(null);
     const [manga, setManga] = useState<string | null>(null);
     const [author, setAuthor] = useState<string | null>(null);
@@ -81,7 +83,7 @@ import {
         coverRelation.attributes &&
         coverRelation.attributes.fileName
       ) {
-        return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.512.jpg`;
+        return `${proxyURL}/covers/${manga.id}/${coverRelation.attributes.fileName}.512.jpg`;
       }
       return null;
     };
@@ -95,7 +97,7 @@ import {
         const { id } = params; // Fixing id extraction here
   
         const response = await axios.get(
-          `https://api.mangadex.org/manga/${id}?includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator`
+          `${proxyURL}/${id}?includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator`
         );
         console.log(response.data); //logging json file
   
@@ -118,7 +120,7 @@ import {
   
         if (authorRelation) {
           const response2 = await axios.get(
-            `https://api.mangadex.org/author/${authorRelation.id}`
+            `${proxyURL}/author/${authorRelation.id}`
           ); // Second API call for author's name
           console.log(response2.data);
   
@@ -156,7 +158,7 @@ import {
   
           while (hasMore) {
             const response = await axios.get(
-              `https://api.mangadex.org/chapter?manga=${id}&limit=${limit}&offset=${offset}`
+              `${proxyURL}/chapter?manga=${id}&limit=${limit}&offset=${offset}`
             );
             const chaptersData = response.data;
             console.log(chaptersData.data);

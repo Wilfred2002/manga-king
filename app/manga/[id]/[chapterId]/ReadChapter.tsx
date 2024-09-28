@@ -10,6 +10,7 @@ interface ReadChapterProps {
   }
 
 export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
+    const proxyURL = "https://proxy-server-five-khaki.vercel.app/api";
     const[mangaTitle, setmangaTitle] = useState(null);
     const[realTitle, setrealTitle] = useState(null);
     const[scanlationGroup, setscanlationGroup] = useState(null);
@@ -27,7 +28,7 @@ export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
 
     async function fetchChapters(){
         try{
-            const response = await axios.get(`https://api.mangadex.org/chapter/${chapterId}`);
+            const response = await axios.get(`${proxyURL}/chapter/${chapterId}`);
             console.log(response.data);
 
             const title = response.data.data.attributes.title.en;
@@ -36,7 +37,7 @@ export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
             const number = response.data.data.attributes.chapter;
             setchapterNumber(number);
 
-            const response5 = await axios.get(`https://api.mangadex.org/manga/${id}`)
+            const response5 = await axios.get(`${proxyURL}/manga/${id}`)
             console.log(response5.data);
 
             let real = response5.data.data.attributes.title.en;
@@ -48,13 +49,13 @@ export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
             setrealTitle(real);
 
             const scanId = response.data.data.relationships[0].id;
-            const response2 = await axios.get(`https://api.mangadex.org/group/${scanId}`)
+            const response2 = await axios.get(`${proxyURL}/group/${scanId}`)
             console.log(response2.data);
 
             const scanGroup = response2.data.data.attributes.name;
             setscanlationGroup(scanGroup);
 
-            const response3 = await axios.get(`https://api.mangadex.org/at-home/server/${chapterId}`);
+            const response3 = await axios.get(`${proxyURL}/at-home/server/${chapterId}`);
             console.log(response3.data);
 
             const baseUrl = response3.data.baseUrl;
