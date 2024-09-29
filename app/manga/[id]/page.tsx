@@ -23,11 +23,6 @@ interface MangaRelationship {
   };
 }
 
-interface Manga {
-  id: string;
-  attributes: MangaAttributes;
-  relationships: MangaRelationship[];
-}
 
 interface MangaData {
   data: {
@@ -51,7 +46,7 @@ interface ChapterAttributes {
   pages: number;
   version: number;
 }
-
+//hi
 interface Chapter {
   id: string;
   type: string;
