@@ -23,6 +23,12 @@ interface MangaRelationship {
   };
 }
 
+interface Manga {
+  id: string;
+  attributes: MangaAttributes;
+  relationships: MangaRelationship[];
+}
+
 interface MangaData {
   data: {
     id: string;
@@ -88,14 +94,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
 
   // Function to get the cover URL
-  const getCoverUrl = (coverArtRelation: MangaRelationship | undefined): string | null => {
-    if (
-      coverArtRelation &&
-      coverArtRelation.attributes &&
-      coverArtRelation.attributes.fileName
-    ) {
-      return `https://uploads.mangadex.org/covers/${mangaData.data.id}/${coverArtRelation.attributes.fileName}.512.jpg`;
+  const getCoverUrl = (manga: Manga) => {
+    const coverRelation = manga.relationships.find((rel: MangaRelationship) => rel.type === "cover_art");
+  
+    if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
+      return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.512.jpg`;
     }
+  
     return null;
   };
 
