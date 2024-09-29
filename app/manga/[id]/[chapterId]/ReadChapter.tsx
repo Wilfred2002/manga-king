@@ -107,13 +107,6 @@ export default function ReadChapter({ id, chapterId }: ReadChapterProps) {
                 <h1 className = "font-bold text-2xl">{realTitle ? realTitle : "Loading title"}</h1>
                 <h1 className = "font-light">{scanlationGroup ? scanlationGroup : "loading group"}</h1>
             </div>
-            <button
-                onClick={scrollToTop}
-                className="fixed right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-3 rounded-full shadow-lg"
-                style={{ zIndex: 1000 }}
-            >
-                ↑ Top
-            </button>
         </div>
     );
 }

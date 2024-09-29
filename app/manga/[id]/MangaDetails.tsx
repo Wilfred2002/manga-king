@@ -36,12 +36,17 @@ interface Chapter {
   attributes: ChapterAttributes;
 }
 
+interface MangaDetailsProps {
+  chapters: Chapter[];
+  mangaId: string; 
+}
+
+
 
 export default function MangaDetails({
-  chapters = [], // Fallback to an empty array if chapters is not provided
-}: {
-  chapters: Chapter[];
-}) {
+  chapters = [], 
+  mangaId,
+}: MangaDetailsProps) {
   return (
     <div className="flex flex-col py-8 max-w-screen-xl mx-auto">
       <Table>
@@ -66,7 +71,7 @@ export default function MangaDetails({
                 <TableCell>{chapter.attributes.title || "Untitled"}</TableCell>
                 <TableCell className="text-right">
                   <a
-                    href={`/manga/${chapter.id}`}
+                    href={`/manga/${mangaId}/${chapter.id}`}
                     className="text-blue-500 hover:text-blue-700"
                   >
                     Read Chapter

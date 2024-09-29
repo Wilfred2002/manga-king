@@ -1,7 +1,6 @@
 import MangaDetails from "./MangaDetails";
 import Nav from "@/components/Nav";
 
-
 interface MangaAttributes {
   title: {
     en?: string;
@@ -24,14 +23,13 @@ interface MangaRelationship {
   };
 }
 
-interface Manga {
-  data:{
+interface MangaData {
+  data: {
     id: string;
     type: string;
     attributes: MangaAttributes;
-    relationships: MangaRelationship[];
-  }
-
+    relationships?: MangaRelationship[]; // Marking relationships as optional
+  };
 }
 
 interface ChapterAttributes {
@@ -60,12 +58,12 @@ function delay(ms: number): Promise<void> {
 
 
 export default async function Page({ params }: { params: { id: string } }) {
+  const mangaId = params.id;
   let chapters: Chapter[] = [];
 
   const chapterRes = await fetch(`https://api.mangadex.org/manga/${params.id}/feed?limit=100&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includeFutureUpdates=1&order[createdAt]=asc&order[updatedAt]=asc&order[publishAt]=asc&order[readableAt]=asc&order[volume]=asc&order[chapter]=asc`);
   
   const chapterData = await chapterRes.json();
-  console.log(chapterData.data);
   const mangaChapters = chapterData.data || []; // Extract chapter array, default to empty array
 
   mangaChapters.forEach((chapter: Chapter) => {
@@ -78,12 +76,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   const mangaRes = await fetch(
     `https://api.mangadex.org/manga/${params.id}?includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator`
   );
-  const mangaData = await mangaRes.json();
+  const mangaData: MangaData = await mangaRes.json();
+  console.log(mangaData);
 
-  const relationships = mangaData.data.relationships || [];
+  const relationships = mangaData?.data?.relationships || [];
   const authorRelation = relationships.find(
     (rel: MangaRelationship) => rel.type === "author"
   );
+  const authorName = authorRelation?.attributes?.name || "Unknown Author";
+
 
   const coverArtRelation = relationships.find(
     (rel: MangaRelationship) => rel.type === "cover_art"
@@ -114,7 +115,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="w-2/3 px-6">
           <h1 className="text-4xl font-bold">
-            {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"]}
+            {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || ""}
           </h1>
           <div className="border-t border-gray-600 my-4"></div>
           <div>
@@ -149,11 +150,11 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <span className="text-gray-400">Author: </span>
-            <span>author</span>
+            <span>{authorName}</span>
           </div>
         </div>
       </div>
-        <MangaDetails chapters={chapters} />
+        <MangaDetails chapters={chapters} mangaId={mangaId} />
     </div>
   );
 }
