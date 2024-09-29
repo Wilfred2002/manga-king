@@ -23,15 +23,7 @@ interface MangaRelationship {
   };
 }
 
-
-interface MangaData {
-  data: {
-    id: string;
-    type: string;
-    attributes: MangaAttributes;
-    relationships?: MangaRelationship[]; // Marking relationships as optional
-  };
-}
+//hio
 
 interface ChapterAttributes {
   volume?: string;
