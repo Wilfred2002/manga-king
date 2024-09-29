@@ -52,14 +52,11 @@ interface Chapter {
   attributes: ChapterAttributes;
 }
 
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 
 export default async function Page({ params }: { params: { id: string } }) {
   const mangaId = params.id;
-  let chapters: Chapter[] = [];
+  const chapters: Chapter[] = [];
 
   const chapterRes = await fetch(`https://api.mangadex.org/manga/${params.id}/feed?limit=100&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includeFutureUpdates=1&order[createdAt]=asc&order[updatedAt]=asc&order[publishAt]=asc&order[readableAt]=asc&order[volume]=asc&order[chapter]=asc`);
   

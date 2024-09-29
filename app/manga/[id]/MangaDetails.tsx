@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
 
 // Interfaces for the manga and related data
 interface ChapterAttributes {
@@ -23,11 +22,6 @@ interface ChapterAttributes {
   updatedAt: string;
   pages: number;
   version: number;
-}
-
-interface ChapterRelationship {
-  id: string;
-  type: string;
 }
 
 interface Chapter {

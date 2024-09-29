@@ -19,7 +19,7 @@ export default async function ReadChapterPage({ params }: { params: { id: string
   const mangaRes = await fetch(`https://api.mangadex.org/manga/${id}`);
   const mangaData = await mangaRes.json();
 
-  let realTitle = mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || "No title available";
+  const realTitle = mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || "No title available";
 
   const scanId = chapterData.data.relationships.find((rel: Relationship) => rel.type === "scanlation_group")?.id;
   let scanGroup = "Unknown Group";
@@ -33,7 +33,6 @@ export default async function ReadChapterPage({ params }: { params: { id: string
   const chapterImagesRes = await fetch(`https://api.mangadex.org/at-home/server/${chapterId}`);
   const chapterImagesData = await chapterImagesRes.json();
 
-  const baseUrl = chapterImagesData.baseUrl;
   const chapterHash = chapterImagesData.chapter.hash;
   const imageArray = chapterImagesData.chapter.data;
 
