@@ -94,18 +94,21 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
 
   // Function to get the cover URL
-  const getCoverUrl = (manga: Manga) => {
-    const coverRelation = manga.relationships.find((rel: MangaRelationship) => rel.type === "cover_art");
-  
-    if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
-      return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.512.jpg`;
-    }
-  
-    return null;
-  };
+// Function to get the cover URL from a coverArtRelation
+const getCoverUrlFromRelation = (coverArtRelation: MangaRelationship | undefined, mangaId: string): string | null => {
+  if (
+    coverArtRelation &&
+    coverArtRelation.attributes &&
+    coverArtRelation.attributes.fileName
+  ) {
+    return `https://uploads.mangadex.org/covers/${mangaId}/${coverArtRelation.attributes.fileName}.512.jpg`;
+  }
+  return null;
+};
 
-  // Get the cover URL, if available
-  const coverUrl = getCoverUrl(coverArtRelation);
+// Get the cover URL, if available
+const coverUrl = getCoverUrlFromRelation(coverArtRelation, mangaData.data.id);
+
 
 
   return (
