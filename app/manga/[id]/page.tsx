@@ -1,11 +1,159 @@
 import MangaDetails from "./MangaDetails";
+import Nav from "@/components/Nav";
 
 
+interface MangaAttributes {
+  title: {
+    en?: string;
+    "ja-ro"?: string;
+  };
+  description: {
+    en: string;
+  };
+  status: string;
+  year?: number;
+  publicationDemographic?: string;
+}
 
-export default function Page({ params }: { params: { id: string } }) {
+interface MangaRelationship {
+  id: string;
+  type: string;
+  attributes?: {
+    name?: string;
+    fileName?: string;
+  };
+}
+
+interface Manga {
+  data:{
+    id: string;
+    type: string;
+    attributes: MangaAttributes;
+    relationships: MangaRelationship[];
+  }
+
+}
+
+interface ChapterAttributes {
+  volume?: string;
+  chapter?: string;
+  title?: string;
+  translatedLanguage?: string;
+  externalUrl?: string | null;
+  publishAt: string;
+  readableAt: string;
+  createdAt: string;
+  updatedAt: string;
+  pages: number;
+  version: number;
+}
+
+interface Chapter {
+  id: string;
+  type: string;
+  attributes: ChapterAttributes;
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+
+export default async function Page({ params }: { params: { id: string } }) {
+  let chapters: Chapter[] = [];
+
+  const chapterRes = await fetch(`https://api.mangadex.org/manga/${params.id}/feed?limit=100&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includeFutureUpdates=1&order[createdAt]=asc&order[updatedAt]=asc&order[publishAt]=asc&order[readableAt]=asc&order[volume]=asc&order[chapter]=asc`);
+  
+  const chapterData = await chapterRes.json();
+  console.log(chapterData.data);
+  const mangaChapters = chapterData.data || []; // Extract chapter array, default to empty array
+
+  mangaChapters.forEach((chapter: Chapter) => {
+    if (chapter.attributes.translatedLanguage === 'en') {
+      chapters.push(chapter);
+    }
+  });
+
+
+  const mangaRes = await fetch(
+    `https://api.mangadex.org/manga/${params.id}?includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator`
+  );
+  const mangaData = await mangaRes.json();
+
+  const relationships = mangaData.data.relationships || [];
+  const authorRelation = relationships.find(
+    (rel: MangaRelationship) => rel.type === "author"
+  );
+
+  const coverArtRelation = relationships.find(
+    (rel: MangaRelationship) => rel.type === "cover_art"
+  );
+
+  // Function to get the cover URL
+  const getCoverUrl = (coverArtRelation: MangaRelationship | undefined): string | null => {
+    if (
+      coverArtRelation &&
+      coverArtRelation.attributes &&
+      coverArtRelation.attributes.fileName
+    ) {
+      return `https://uploads.mangadex.org/covers/${mangaData.data.id}/${coverArtRelation.attributes.fileName}.512.jpg`;
+    }
+    return null;
+  };
+
+  // Get the cover URL, if available
+  const coverUrl = getCoverUrl(coverArtRelation);
+
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
-      <MangaDetails params={params} />
+      <Nav />
+      <div className="flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto">
+        <div className="w-1/3">
+          <img src={coverUrl || "/default-cover.jpg"} alt="manga cover" />
+        </div>
+        <div className="w-2/3 px-6">
+          <h1 className="text-4xl font-bold">
+            {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"]}
+          </h1>
+          <div className="border-t border-gray-600 my-4"></div>
+          <div>
+            <span className="text-gray-400">Origination: </span>
+            <span>{mangaData.data.type || "Loading type..."}</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Demographic: </span>
+            <span>{mangaData.data.attributes.publicationDemographic || ""}</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Published: </span>
+            <span>200</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Status: </span>
+            <span>{mangaData.data.attributes.status || "Loading manga status..."}</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Rating: </span>
+            <span>200</span>
+          </div>
+
+          <h1 className="text-2xl py-3 font-bold">Description</h1>
+          <p>{mangaData.data.attributes.description.en || "Loading description..."}</p>
+          <div className="py-6">Read Ch.1</div>
+          <div className="border-t border-gray-600 my-4"></div>
+          <h1 className="text-2xl py-3 font-bold">More Info</h1>
+          <div>
+            <span className="text-gray-400">Artist: </span>
+            <span>artists</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Author: </span>
+            <span>author</span>
+          </div>
+        </div>
+      </div>
+        <MangaDetails chapters={chapters} />
     </div>
   );
 }
