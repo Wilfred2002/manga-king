@@ -57,7 +57,6 @@ interface Chapter {
 
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const proxyURL = ""
   const mangaId = params.id;
   const chapters: Chapter[] = [];
 
