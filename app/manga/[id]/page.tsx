@@ -85,16 +85,21 @@ export default async function Page({ params }: { params: { id: string } }) {
   const authorName = authorRelation?.attributes?.name || "Unknown Author";
 
 
-const getCoverUrl = (mangaData: Manga) => {
-  const relationships = mangaData?.data?.relationships || [];
-  const coverRelation = relationships.find(
-    (rel: MangaRelationship) => rel.type === "cover_art"
-  );
-  if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
-    return `https://uploads.mangadex.org/covers/${mangaData.data.id}/${coverRelation.attributes.fileName}.512.jpg`;
-  }
-  return '/default-cover.jpg';
-};
+  const getCoverUrl = (manga: Manga) => {
+    // Ensure relationships exist and find the cover_art relationship
+    const coverRelation = manga.data.relationships.find(
+      (rel: MangaRelationship) => rel.type === "cover_art"
+    );
+  
+    // Ensure coverRelation and its attributes exist, then return the constructed cover URL
+    if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
+      const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
+      return `https://uploads.mangadex.org/covers/${mangaId}/${coverFileName}.512.jpg`; // Use 256 or 512 pixel version
+    }
+  
+    // Return a fallback image if no cover is available
+    return '/fallback-image.jpg';
+  };
 
 // Get the cover URL, if available
 const coverUrl = getCoverUrl(mangaData);
