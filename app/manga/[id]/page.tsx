@@ -57,6 +57,7 @@ interface Chapter {
 
 
 export default async function Page({ params }: { params: { id: string } }) {
+  const proxyURL = ""
   const mangaId = params.id;
   const chapters: Chapter[] = [];
 
@@ -94,7 +95,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     // Ensure coverRelation and its attributes exist, then return the constructed cover URL
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
-      return `https://uploads.mangadex.org/covers/${mangaId}/${coverFileName}.512.jpg`; // Use 256 or 512 pixel version
+      return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaId}/${coverFileName}?size=512`; // Use 256 or 512 pixel version
     }
   
     // Return a fallback image if no cover is available
