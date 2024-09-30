@@ -94,11 +94,11 @@ export default async function Page({ params }: { params: { id: string } }) {
       (rel: MangaRelationship) => rel.type === "cover_art"
     );
   console.log(coverRelation);
-  console.log(mangaData.data.id);
+  console.log("dataid: ",mangaData.data.id);
     // Ensure coverRelation and its attributes exist, then return the constructed cover URL
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
-      console.log(coverFileName);
+      console.log("Coverfile: ",coverFileName);
       return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}`; // Use 256 or 512 pixel version
     }//hi
   //hi
@@ -133,7 +133,7 @@ const coverUrl = getCoverUrl(mangaData);
           </div>
           <div>
             <span className="text-gray-400">Published: </span>
-            <span>200</span>
+            <span>not implemented yet</span>
           </div>
           <div>
             <span className="text-gray-400">Status: </span>
@@ -141,7 +141,7 @@ const coverUrl = getCoverUrl(mangaData);
           </div>
           <div>
             <span className="text-gray-400">Rating: </span>
-            <span>200</span>
+            <span>not implemented yet</span>
           </div>
 
           <h1 className="text-2xl py-3 font-bold">Description</h1>
@@ -151,7 +151,7 @@ const coverUrl = getCoverUrl(mangaData);
           <h1 className="text-2xl py-3 font-bold">More Info</h1>
           <div>
             <span className="text-gray-400">Artist: </span>
-            <span>artists</span>
+            <span>not implemented yet</span>
           </div>
           <div>
             <span className="text-gray-400">Author: </span>
