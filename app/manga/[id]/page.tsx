@@ -99,7 +99,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
       console.log(coverFileName);
-      return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}?size=512`; // Use 256 or 512 pixel version
+      return `https://uploads.mangadex.org/covers/${mangaData.data.id}/${coverFileName}`; // Use 256 or 512 pixel version
     }
   
     // Return a fallback image if no cover is available
