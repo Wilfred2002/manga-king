@@ -18,8 +18,10 @@ interface MangaRelationship {
   id: string;
   type: string;
   attributes?: {
+    description?: string;
     name?: string;
     fileName?: string;
+    locale?: string;
   };
 }
 
@@ -77,6 +79,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
   const mangaData= await mangaRes.json();
   console.log(mangaData.data.relationships);
+  console.log(mangaData.data);
 
   const relationships = mangaData?.data?.relationships || [];
   const authorRelation = relationships.find(
@@ -90,11 +93,13 @@ export default async function Page({ params }: { params: { id: string } }) {
     const coverRelation = manga.data.relationships.find(
       (rel: MangaRelationship) => rel.type === "cover_art"
     );
-  
+  console.log(coverRelation);
+  console.log(mangaData.data.id);
     // Ensure coverRelation and its attributes exist, then return the constructed cover URL
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
-      return `https://proxy-server-five-khaki.vercel.app/api/proxy-cover/${mangaId}/${coverFileName}.jpg`; // Use 256 or 512 pixel version
+      console.log(coverFileName);
+      return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}?size=512`; // Use 256 or 512 pixel version
     }
   
     // Return a fallback image if no cover is available
@@ -111,7 +116,7 @@ const coverUrl = getCoverUrl(mangaData);
       <Nav />
       <div className="flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto">
         <div className="w-1/3">
-          <img src={coverUrl || "/default-cover.jpg"} alt="manga cover" />
+          <img src={coverUrl} alt="manga cover" />
         </div>
         <div className="w-2/3 px-6">
           <h1 className="text-4xl font-bold">

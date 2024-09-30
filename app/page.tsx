@@ -28,7 +28,7 @@ interface Manga {
 
 export default async function Home() {
   // Fetch manga list from the API
-  const res = await fetch('https://api.mangadex.org/manga?limit=10&order[followedCount]=desc&includes[]=cover_art');
+  const res = await fetch('https://api.mangadex.org/manga?limit=20&order[followedCount]=desc&includes[]=cover_art');
   const data = await res.json();
   
   // Ensure mangaList is an array (in case the response structure is different)
