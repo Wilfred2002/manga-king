@@ -100,7 +100,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
       console.log(coverFileName);
       return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}?size=512`; // Use 256 or 512 pixel version
-    }
+    }//hi
   
     // Return a fallback image if no cover is available
     return '/fallback-image.jpg';
