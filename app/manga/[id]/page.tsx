@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     // Ensure coverRelation and its attributes exist, then return the constructed cover URL
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
-      return `https://proxy-server-five-khaki.vercel.app/api/proxy-covers/${mangaId}/${coverFileName}.jpg`; // Use 256 or 512 pixel version
+      return `https://proxy-server-five-khaki.vercel.app/api/proxy-cover/${mangaId}/${coverFileName}.jpg`; // Use 256 or 512 pixel version
     }
   
     // Return a fallback image if no cover is available
