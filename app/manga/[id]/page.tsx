@@ -40,9 +40,12 @@ interface ChapterAttributes {
 }
 
 interface Manga {
-  id: string;
-  attributes: MangaAttributes;
-  relationships: MangaRelationship[];
+  data:{
+    id: string;
+    attributes: MangaAttributes;
+    relationships: MangaRelationship[];
+  }
+
 }
 //hi
 interface Chapter {
@@ -82,7 +85,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const authorName = authorRelation?.attributes?.name || "Unknown Author";
 
 
-const getCoverUrl = (mangaData: any) => {
+const getCoverUrl = (mangaData: Manga) => {
   const relationships = mangaData?.data?.relationships || [];
   const coverRelation = relationships.find(
     (rel: MangaRelationship) => rel.type === "cover_art"
