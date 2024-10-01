@@ -115,7 +115,7 @@ return (
         <img src={coverUrl} alt="manga cover" className="w-full max-w-xs" />
       </div>
       <div className="w-full md:w-2/3 px-6 text-left">
-        <h1 className="text-4xl font-bold text-center pt-4">
+        <h1 className="text-4xl font-bold text-center md:text-left pt-4">
           {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || ""}
         </h1>
         <div className="border-t border-gray-600 my-4"></div>
