@@ -112,7 +112,7 @@ return (
     <Nav />
     <div className="flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto justify-center items-center">
       <div className="w-full md:w-1/3 flex justify-center">
-        <img src={coverUrl} alt="manga cover" className="w-full max-w-xs" />
+        <img src={coverUrl} alt="manga cover" className="w-full max-w-full md:max-w-xl h-auto" />
       </div>
       <div className="w-full md:w-2/3 px-6 text-left">
         <h1 className="text-4xl font-bold text-center md:text-left pt-4">
