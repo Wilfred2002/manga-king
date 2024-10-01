@@ -1,5 +1,6 @@
 "use client";
 
+import SearchBar from "./SearchBar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ModeToggle } from "./ui/ModeToggle";
@@ -13,6 +14,9 @@ export default function Nav() {
           <h1 className="text-2xl">Manga King</h1>
         </Link>
         <ul className="flex space-x-4 ml-auto">
+          <li>
+            <SearchBar></SearchBar>
+          </li>
           <li>
             <Link href="/">
               <Button variant="ghost">Home</Button>

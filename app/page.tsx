@@ -42,7 +42,7 @@ export default async function Home() {
   const getCoverUrl = (manga: Manga) => {
     const coverRelation = manga.relationships.find((rel: MangaRelationship) => rel.type === "cover_art");
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
-      return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.256.jpg`;
+      return `https://uploads.mangadex.org/covers/${manga.id}/${coverRelation.attributes.fileName}.512.jpg`;
     }
     return null;
   };
