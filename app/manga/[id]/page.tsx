@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const chapterRes = await fetch(`https://api.mangadex.org/manga/${params.id}/feed?limit=100&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includeFutureUpdates=1&order[createdAt]=asc&order[updatedAt]=asc&order[publishAt]=asc&order[readableAt]=asc&order[volume]=asc&order[chapter]=asc`);
   
   const chapterData = await chapterRes.json();
-  const mangaChapters = chapterData.data || []; // Extract chapter array, default to empty array
+  const mangaChapters = chapterData.data || []; 
 
   mangaChapters.forEach((chapter: Chapter) => {
     if (chapter.attributes.translatedLanguage === 'en') {
@@ -89,77 +89,73 @@ export default async function Page({ params }: { params: { id: string } }) {
 
 
   const getCoverUrl = (manga: Manga) => {
-    // Ensure relationships exist and find the cover_art relationship
     const coverRelation = manga.data.relationships.find(
       (rel: MangaRelationship) => rel.type === "cover_art"
     );
   console.log(coverRelation);
   console.log("dataid: ",mangaData.data.id);
-    // Ensure coverRelation and its attributes exist, then return the constructed cover URL
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
-      const coverFileName = coverRelation.attributes.fileName; // Full filename (e.g., "xyz.png")
+      const coverFileName = coverRelation.attributes.fileName; 
       console.log("Coverfile: ",coverFileName);
-      return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}`; // Use 256 or 512 pixel version
+      return `https://proxy-server-five-khaki.vercel.app/proxy-cover/${mangaData.data.id}/${coverFileName}`;
     }//hi
-  //hi
-    // Return a fallback image if no cover is available
+
     return '/fallback-image.jpg';
   };
 
-// Get the cover URL, if available
 const coverUrl = getCoverUrl(mangaData);
 
 
 
-  return (
-    <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
-      <Nav />
-      <div className="flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto">
-        <div className="w-1/3">
-          <img src={coverUrl} alt="manga cover" />
+return (
+  <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
+    <Nav />
+    <div className="flex flex-col md:flex-row py-8 max-w-screen-xl mx-auto justify-center items-center">
+      <div className="w-full md:w-1/3 flex justify-center">
+        <img src={coverUrl} alt="manga cover" className="w-full max-w-xs" />
+      </div>
+      <div className="w-full md:w-2/3 px-6 text-left">
+        <h1 className="text-4xl font-bold text-center pt-4">
+          {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || ""}
+        </h1>
+        <div className="border-t border-gray-600 my-4"></div>
+        <div>
+          <span className="text-gray-400">Origination: </span>
+          <span>{mangaData.data.type || "Loading type..."}</span>
         </div>
-        <div className="w-2/3 px-6">
-          <h1 className="text-4xl font-bold">
-            {mangaData.data.attributes.title.en || mangaData.data.attributes.title["ja-ro"] || ""}
-          </h1>
-          <div className="border-t border-gray-600 my-4"></div>
-          <div>
-            <span className="text-gray-400">Origination: </span>
-            <span>{mangaData.data.type || "Loading type..."}</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Demographic: </span>
-            <span>{mangaData.data.attributes.publicationDemographic || ""}</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Published: </span>
-            <span>not implemented yet</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Status: </span>
-            <span>{mangaData.data.attributes.status || "Loading manga status..."}</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Rating: </span>
-            <span>not implemented yet</span>
-          </div>
+        <div>
+          <span className="text-gray-400">Demographic: </span>
+          <span>{mangaData.data.attributes.publicationDemographic || ""}</span>
+        </div>
+        <div>
+          <span className="text-gray-400">Published: </span>
+          <span>not implemented yet</span>
+        </div>
+        <div>
+          <span className="text-gray-400">Status: </span>
+          <span>{mangaData.data.attributes.status || "Loading manga status..."}</span>
+        </div>
+        <div>
+          <span className="text-gray-400">Rating: </span>
+          <span>not implemented yet</span>
+        </div>
 
-          <h1 className="text-2xl py-3 font-bold">Description</h1>
-          <p>{mangaData.data.attributes.description.en || "Loading description..."}</p>
-          <div className="py-6">Read Ch.1</div>
-          <div className="border-t border-gray-600 my-4"></div>
-          <h1 className="text-2xl py-3 font-bold">More Info</h1>
-          <div>
-            <span className="text-gray-400">Artist: </span>
-            <span>not implemented yet</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Author: </span>
-            <span>{authorName}</span>
-          </div>
+        <h1 className="text-2xl py-3 font-bold">Description</h1>
+        <p>{mangaData.data.attributes.description.en || "Loading description..."}</p>
+        <div className="py-6">Read Ch.1</div>
+        <div className="border-t border-gray-600 my-4"></div>
+        <h1 className="text-2xl py-3 font-bold">More Info</h1>
+        <div>
+          <span className="text-gray-400">Artist: </span>
+          <span>not implemented yet</span>
+        </div>
+        <div>
+          <span className="text-gray-400">Author: </span>
+          <span>{authorName}</span>
         </div>
       </div>
-        <MangaDetails chapters={chapters} mangaId={mangaId} />
     </div>
-  );
+      <MangaDetails chapters={chapters} mangaId={mangaId} />
+  </div>
+);
 }
