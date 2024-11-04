@@ -8,9 +8,14 @@ export default function About() {
         <h1 className="text-4xl font-bold mb-4 text-center">
           About This Project
         </h1>
-        <p className="text-lg max-w-2xl text-center">
+        <p className="text-lg max-w-2xl text-left">
           This website was developed by Wilfred Naraga as an educational project.
-          Built on Typescript using NextJS and Tailwind CSS. Credit goes to MangaDex!
+          Built on Typescript using NextJS, styled using Tailwind CSS. All the data that is being displayed in this website is sourced
+          from the MangaDex api, so all credit goes to them and their team for allowing me to make this project.
+        </p>
+        <p className = "text-lg max-w-2xl text-left py-8">
+          If you don't find chapters for a manga, it's because MangaDex doesn't have any english translations or scanlations for that manga. All source code can be
+          found on Github
         </p>
       </div>
     </div>

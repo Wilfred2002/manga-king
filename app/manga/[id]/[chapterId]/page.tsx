@@ -33,8 +33,8 @@ export default async function ReadChapterPage({ params }: { params: { id: string
   const chapterImagesRes = await fetch(`https://api.mangadex.org/at-home/server/${chapterId}`);
   const chapterImagesData = await chapterImagesRes.json();
 
-  const chapterHash = chapterImagesData.chapter.hash;
-  const imageArray = chapterImagesData.chapter.data;
+  const chapterHash = chapterImagesData.chapter?.hash || "defaultHash"; // Use a fallback if hash is undefined
+  const imageArray = chapterImagesData.chapter?.data || []; // Use empty array if data is undefined
 
   // Construct image URLs
   const imageUrls = imageArray.map((imageFileName: string) => `https://uploads.mangadex.org/data/${chapterHash}/${imageFileName}`);

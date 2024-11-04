@@ -27,18 +27,15 @@ interface Manga {
 }
 
 export default async function Home() {
-  // Fetch manga list from the API
   const res = await fetch('https://api.mangadex.org/manga?limit=20&order[followedCount]=desc&includes[]=cover_art');
   const data = await res.json();
 
   const res2 = await fetch('https://api.mangadex.org/manga?limit=20&order[latestUploadedChapter]=desc&includes[]=cover_art');
   const data2 = await res2.json()
   
-  // Ensure mangaList is an array (in case the response structure is different)
   const mangaList = data?.data || []; 
   const mangaList2 = data2?.data || [];
 
-  // Helper function to get cover URL
   const getCoverUrl = (manga: Manga) => {
     const coverRelation = manga.relationships.find((rel: MangaRelationship) => rel.type === "cover_art");
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
@@ -70,8 +67,8 @@ export default async function Home() {
       </section>
 
       <section className="p-12">
-        <h3 className="text-2xl text-center mb-8">Top 20 Current xManga</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <h3 className="text-2xl text-center mb-8">Hottest Manga</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {mangaList.map((manga: Manga) => (
             <Link href={`/manga/${manga.id}`} key={manga.id}>
               <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer">

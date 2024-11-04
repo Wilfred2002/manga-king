@@ -78,8 +78,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     `https://api.mangadex.org/manga/${params.id}?includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator`
   );
   const mangaData= await mangaRes.json();
-  console.log(mangaData.data.relationships);
-  console.log(mangaData.data);
+
 
   const relationships = mangaData?.data?.relationships || [];
   const authorRelation = relationships.find(
@@ -92,7 +91,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     const coverRelation = manga.data.relationships.find(
       (rel: MangaRelationship) => rel.type === "cover_art"
     );
-  console.log(coverRelation);
   console.log("dataid: ",mangaData.data.id);
     if (coverRelation && coverRelation.attributes && coverRelation.attributes.fileName) {
       const coverFileName = coverRelation.attributes.fileName; 
