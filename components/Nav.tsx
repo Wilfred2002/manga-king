@@ -12,7 +12,9 @@ export default function Nav() {
   return (
     <nav className="bg-white dark:bg-gray-800 text-black dark:text-gray-300">
       <header className="flex justify-between items-center px-10 py-2">
-        <img src="/pngs/pngegg.png" alt="Logo" className="h-12 w-auto" /> 
+        <Link href ="/">
+          <img src="/pngs/pngegg.png" alt="Logo" className="h-12 w-auto" /> 
+        </Link>
         <Link href="/">
           <h1 className="text-2xl">Manga King</h1>
         </Link>
@@ -78,7 +80,7 @@ export default function Nav() {
                 </Button>
               </Link>
             </li>
-            <ModeToggle />
+            <li className = "pl-56"><ModeToggle></ModeToggle></li>
           </ul>
         </div>
       )}

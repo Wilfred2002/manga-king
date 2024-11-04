@@ -45,7 +45,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300">
+    <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-gray-300 font-sans">
       <Nav />
 
       <section className="relative py-48 flex flex-col">

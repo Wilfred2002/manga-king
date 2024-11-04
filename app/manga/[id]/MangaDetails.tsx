@@ -51,9 +51,9 @@ export default function MangaDetails({
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); // State to manage sorting order
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); //state to manage sorting order
 
-  // Fetch all chapters once when component mounts
+  //fetch all chapters once when component mounts
   useEffect(() => {
     const fetchChapters = async () => {
       setLoading(true);
@@ -125,7 +125,7 @@ export default function MangaDetails({
       ) : (
         <>
           {/* Sort Dropdown */}
-          <div className="mb-4">
+          <div className="mb-4 px-4">
             <label htmlFor="sortOrder" className="mr-2">Sort by:</label>
             <select
               id="sortOrder"
@@ -137,7 +137,9 @@ export default function MangaDetails({
               <option value="desc">Descending</option>
             </select>
           </div>
+          <div className = "px-4">
 
+          
           <Table>
             <TableHeader>
               <TableRow>
@@ -177,7 +179,7 @@ export default function MangaDetails({
               )}
             </TableBody>
           </Table>
-
+          </div>
           {/* Pagination Controls */}
           <div className="flex justify-between items-center py-4">
             <button
