@@ -14,7 +14,7 @@ export default function About() {
           from the MangaDex api, so all credit goes to them and their team for allowing me to make this project.
         </p>
         <p className = "text-lg max-w-2xl text-left py-8">
-          If you don't find chapters for a manga, it's because MangaDex doesn't have any english translations or scanlations for that manga. All source code can be
+          If you dont find chapters for a manga, its because MangaDex doesnt have any english translations or scanlations for that manga. All source code can be
           found on Github
         </p>
       </div>
